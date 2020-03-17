@@ -5,13 +5,16 @@ import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
 import { RouterModule } from '@angular/router';
 import { dashboardRoutes } from './dashboard.routes';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [LayoutComponent, HomeComponent, AdminComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild(dashboardRoutes)
+    RouterModule.forChild(dashboardRoutes),
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class DashboardModule { }

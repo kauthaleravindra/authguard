@@ -1,0 +1,16 @@
+<form [formGroup]="dummyForm" (ngSubmit)="submit()">
+    <input type="text" formControlName="name">
+    <div formGroupName="adress">
+        <input type="text" formControlName="city">
+        <input type="text" formControlName="contact">
+        <input type="text" formControlName="email">
+    </div>
+    <div formArrayName="specialField" *ngFor="let record of dummyForm.controls.specialField.controls;let i=index">
+
+        <div type="text" [formGroupName]="i">
+            <input type="text" formControlName="name">
+        </div>
+    </div>
+    <button type="button" (click)="addField()">Add</button>
+    <button type="submit">submit</button>
+</form>
