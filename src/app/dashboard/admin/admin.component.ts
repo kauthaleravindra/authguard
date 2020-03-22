@@ -6,10 +6,16 @@ import { FormBuilder, Validators, FormControl, FormArray } from '@angular/forms'
   styles: []
 })
 export class AdminComponent implements OnInit {
-  specialField: FormArray;
   dummyForm: any;
   constructor(private fb: FormBuilder) {
     this.dummyForm = this.fb.group({
+      record: this.fb.array([this.getRecord()])
+
+    })
+  };
+
+  getRecord() {
+    return this.fb.group({
       name: ['', Validators.required],
       adress: this.fb.group({
         city: [''],
@@ -18,17 +24,21 @@ export class AdminComponent implements OnInit {
       }),
       specialField: this.fb.array([this.createField()])
     })
-  };
+  }
 
-  addField() {
-    this.specialField = this.dummyForm.get('specialField') as FormArray;
-    this.specialField.push(this.createField());
-    console.log(this.dummyForm)
+  addRecord() {
+    let record = this.dummyForm.controls.record.push(this.getRecord())
+  }
+
+  addField(re) {
+    let specialField = this.dummyForm.controls.record.at(re).get('specialField') as FormArray
+    specialField.push(this.createField())
   }
 
   createField() {
     return this.fb.group({
-      name: ''
+      option: '',
+      isCorrect: ''
     });
   }
 
@@ -36,6 +46,16 @@ export class AdminComponent implements OnInit {
     console.log(this.dummyForm);
   }
 
+  optionChecked(reInd, oInd) {
+    this.dummyForm.controls.record.at(reInd).get('specialField').value.forEach((element, index) => {
+      console.log(element, index)
+      if (index === oInd) {
+        element.isCorrect = true
+      } else {
+        element.isCorrect = false
+      }
+    })
+  }
   submit() {
     console.log(this.dummyForm.value)
   }

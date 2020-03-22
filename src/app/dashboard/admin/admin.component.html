@@ -1,16 +1,29 @@
 <form [formGroup]="dummyForm" (ngSubmit)="submit()">
-    <input type="text" formControlName="name">
-    <div formGroupName="adress">
-        <input type="text" formControlName="city">
-        <input type="text" formControlName="contact">
-        <input type="text" formControlName="email">
-    </div>
-    <div formArrayName="specialField" *ngFor="let record of dummyForm.controls.specialField.controls;let i=index">
+    <div formArrayName="record" *ngFor="let record of dummyForm.controls.record.controls;let re=index">
+        <div [formGroupName]="re">
+            <h1>Record {{re+1}}</h1>
+            <label>Name</label>
+            <input type="text" placeholder="record name" formControlName="name">
+            <div formGroupName="adress">
+                <label>city</label>
+                <input type="text" formControlName="city">
+                <label>contact</label>
+                <input type="text" formControlName="contact">
+                <label>email</label>
+                <input type="text" formControlName="email">
+            </div>
+            <div formArrayName="specialField" *ngFor="let record of record.controls.specialField.controls;let i=index">
 
-        <div type="text" [formGroupName]="i">
-            <input type="text" formControlName="name">
+                <div type="text" [formGroupName]="i">
+
+                    <input placeholder="option {{i+1}}" type="radio" id="{{'any' + re}}" [value]='i'
+                        name="{{'isCorrect'+re}}" (change)="optionChecked(re, i)" [checked]="record.isCorrect==true">
+                    <input placeholder="option {{i+1}}" type="text" formControlName="option">
+                </div>
+            </div>
+            <button type="button" (click)="addField(re)">Add</button>
         </div>
     </div>
-    <button type="button" (click)="addField()">Add</button>
+    <button type="button" class="btn btn-primary" (click)="addRecord()">Add record</button>
     <button type="submit">submit</button>
 </form>
