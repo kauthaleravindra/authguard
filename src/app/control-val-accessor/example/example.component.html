@@ -1,0 +1,17 @@
+<section class="f">
+  <!-- <app-example1 formControlName="lastName"></app-example1> -->
+  <form [formGroup]="exampleForm" (ngSubmit)="submit()">
+    <div class="form-group">
+      <label for="firstname">First Name</label>
+      <input type="text" id="firstname" class="form-control" name="firstname" formControlName="firstname">
+      <h1>{{exampleForm.controls.firstname.dirty}}</h1>
+    </div>
+    <div class="form-group">
+      <label for="firstname">Last name</label>
+      <app-example1 formControlName="lastName"></app-example1>
+      <h1>{{exampleForm.get('lastName').dirty}}</h1>
+      <h1>{{exampleForm.get('lastName').value}}</h1>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</section>
